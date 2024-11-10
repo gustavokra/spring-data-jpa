@@ -1,15 +1,19 @@
 # Spring Data JPA
 Adiciona uma camada sobre o JPA.
+
 A interaçao com banco de dados será através de herança e interfaces.
 
+
 ## Interfaces
-CrudRepository
-JPARepository
-PagingAndSortingRepository
+- CrudRepository
+- JPARepository
+- PagingAndSortingRepository
 
 ## Anotações
 @Query
+
 @Param
+
 
 ## Criando repositórios
 
