@@ -5,6 +5,11 @@ Adiciona uma camada sobre o JPA.
 
 A interaçao com banco de dados será através de herança e interfaces.
 
+## Repository Pattern
+Seu objetivo é abstrair o acesso a dados de forma genérica a partir de seu modelo.
+O Spring Data JPA facilita a implementação do padrão Repository através de AOP (Aspect Oriented Programin - programação orientada a aspectos).
+
+Utilizando interfaces o Spring gera a implementação dos métodos de acesso a dados, estender a classe JpaRepository traz vários métodos genéricos de CRUD.
 
 ## Interfaces
 - CrudRepository
@@ -12,9 +17,16 @@ A interaçao com banco de dados será através de herança e interfaces.
 - PagingAndSortingRepository
 
 ## Anotações
-@Query
+- @Query
+- @Param
 
-@Param
+## Principais métodos disponibilizados:
+- save
+- findById
+- existisById
+- findAll
+- delete
+- count
 
 
 ## Criando repositórios
@@ -101,3 +113,36 @@ public class StartApp implements CommandLineRunner {
     }  
 }
 ```
+
+## Consultas customizadas
+Duas maneiras: **QueryMethod** e **QueryOverride**
+
+### QueryMethod
+O Spring Data JPA se encarrega de interpretar a assinatura de um método (nome + parâmetros) para montar a JPQL correspondente.
+
+```
+public interface UserRepository extends Repository<User, Log> {
+	List<User> findByEmailAddressAndLastName(String emailAddres, String lastName)
+}
+```
+
+![keywords](query-method-keywords.png)
+### QueryOverride
+Usado para querys mais avançadas.
+```
+public interface UserRepository extends JpaRepository<User, Integer> {
+	//Query Method
+	List<User> findByNameContaining(String name);
+
+	//Query Override
+	@Query("Select u FROM User u WHERE u.name LIKE %:name%")
+	List<User> filtrarPorNome(@Param("name) String name);
+
+	//Query Method
+	User findByUsername(String username);
+}
+```
+referência : [JPA Query Methods](https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html)
+
+
+
