@@ -1,4 +1,6 @@
-# Spring Data JPA
+# Spring Data JPA 
+Usando Spring Boot.
+
 Adiciona uma camada sobre o JPA.
 
 A interaçao com banco de dados será através de herança e interfaces.
